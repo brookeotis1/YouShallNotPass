@@ -1,8 +1,9 @@
+//set characters to use for password
 
-var char ='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+var lower ='abcdefghijklmnopqrstuvwxyz'
+var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var num ='0123456789'
 var sym ='!@#$%^&*'
-
 
 
 // Assignment Code
@@ -14,34 +15,76 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
+};
 
+
+//get random number 
+function getRandom(str) {
+var randomnum = Math.floor(Math.random()*str.length)
+var randomchar = str[randomnum]
+return randomchar
 }
 
-function getInfo() {
-    // Get Password Length, Prompt 8 to 128 Characters
-    var getPasswordLength = parseInt(prompt("How Long Would You Like Your Password? 8 - 128 Characters."));
-    //If statement to get a number
-    if (isNaN(getPasswordLength)(getPasswordLength < 8 || getPasswordLength > 128)) {
-      alert("Try Again, Enter a Number.");
-      getInfo();
-    
-    } 
-    console.log(getPasswordLength);
+function generatePassword() {
+
+//asking for a number of characters, alerting if not a number or outside the range
+
+var getCharacters = parseInt(prompt('Choose a number of characters between 8 and 128'))
+if(getCharacters < 8 || getCharacters > 128 || isNaN (getCharacters)) {
+  alert("Number must be between 8-128")
+  return;
 }
 
-// Get Password LowerCase Characters, Confirm  
-var getNumbers = prompt ('Do you want numbers in your password?');
-var getLetters = prompt ('Do you want letters in your password?');
-var getSymbols = prompt('Do you want symbols in your password?');
+//questions for parameters for password 
 
-    
+var getUpper = confirm('Do you want upper case letters in your password?');
+var getLower = confirm('Do you want lower case letters in your password?');
+var getNumbers = confirm ('Do you want numbers in your password?');
+var getSymbols = confirm('Do you want symbols in your password?');
+
+//If they choose cancel on every prompt it will alert to confirm something
+
+if(!getUpper && !getLower && !getNumbers && !getSymbols) {
+  alert("Please pick one")
+  return;
+};
+
+var myPass = ""
+
+
+//while loop to keep iterating through the characters
+
+while(myPass.length < getCharacters) {
+  if(getUpper){
+    myPass += getRandom(upper)
+    if(myPass.length === getCharacters) {
+      break;
+    }
+  } if(getLower) {
+    myPass += getRandom(lower)
+    if(myPass.length === getCharacters) {
+      break;
+    }
+
+  } if(getNumbers) {
+    myPass += getRandom(num)
+    if(myPass.length === getCharacters) {
+      break;
+    }
+  } if(getSymbols) {
+    myPass += getRandom(sym)
+    if(myPass.length === getCharacters) {
+      break;
+    }
+  }
+} 
 
 
 
-
-
-getInfo();
-
+//return function
+return (myPass);
+}
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
